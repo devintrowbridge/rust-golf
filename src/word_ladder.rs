@@ -1,6 +1,6 @@
-use std::{collections::{VecDeque, HashSet}, rc::Rc, cell::RefCell};
+use std::{collections::{VecDeque, HashSet}, rc::Rc};
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 struct Node<T> {
     pub val : T,
     parent: Option<Rc<Node<T>>>,
@@ -39,6 +39,7 @@ where T : Clone
 
 struct Solution;
 impl Solution {
+    #[allow(dead_code)]
     pub fn hamming_distance(lhs: &str, rhs: &str) -> Option<u32> {
         if lhs.len() != rhs.len() { return None }
 
@@ -50,6 +51,7 @@ impl Solution {
         Some(distance)
     }
 
+    #[allow(dead_code)]
     pub fn get_neighbors(word: &str, word_list: &[String]) -> Vec<String> {
         let mut neighbors = Vec::new();
         
@@ -62,16 +64,13 @@ impl Solution {
         neighbors
     }
 
-    pub fn find_ladders(begin_word: String, end_word: String, word_list: Vec<String>) -> Vec<Vec<String>> {
-        let mut ladders = Vec::new();
-        let mut ladder = Vec::new();
+    #[allow(dead_code)]
+    pub fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
         let mut touched = HashSet::new();
 
-        if begin_word.len() != end_word.len() { return ladders }
+        if begin_word.len() != end_word.len() { return 0 }
         if begin_word == end_word { 
-            ladder.push(begin_word);
-            ladders.push(ladder);
-            return ladders;
+            return 0;
         }
 
         touched.insert(begin_word.clone());
@@ -83,8 +82,7 @@ impl Solution {
             let current = bfs_queue.pop_front().unwrap();
 
             if current.val == end_word {
-                ladders.push(current.path_to_root());
-                break
+                return current.path_to_root().len() as i32;
             }
 
             for neighbor in Self::get_neighbors(&current.val, &word_list) {
@@ -95,7 +93,7 @@ impl Solution {
             }
         }
 
-        ladders
+        0 as i32
     }
 }
 
@@ -105,13 +103,11 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let begin_word = "hit".to_string();
-        let end_word = "cog".to_string();
+        let begin_word = "hit".into();
+        let end_word = "cog".into();
         let word_list = vec!["hot".into(),"dot".into(),"dog".into(),"lot".into(),"log".into(),"cog".into()];
 
-        let ladders = Solution::find_ladders(begin_word, end_word, word_list);
-
-        assert_eq!(ladders.len(), 2);
-        assert_eq!(ladders.first().unwrap().len(), 5);
+        let ladder_len = Solution::ladder_length(begin_word, end_word, word_list);
+        assert_eq!(ladder_len, 5);
     }
 }
