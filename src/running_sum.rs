@@ -1,5 +1,7 @@
+#[allow(dead_code)]
 struct Solution;
 impl Solution {
+    #[allow(dead_code)]
     pub fn running_sum(mut nums: Vec<i32>) -> Vec<i32> {
         if nums.is_empty() { return nums }
 
@@ -10,7 +12,6 @@ impl Solution {
         nums
     }
 }
-
 
 #[cfg(test)]
 mod tests {
