@@ -28,44 +28,39 @@ impl TreeNode {
     }
 }
 
-#[allow(dead_code)]
-struct Solution {}
-
 use std::rc::Rc;
 use std::cell::RefCell;
-impl Solution {
-    #[allow(dead_code)]
-    pub fn lowest_common_ancestor(
-            root: Option<Rc<RefCell<TreeNode>>>, 
-            p: Option<Rc<RefCell<TreeNode>>>, 
-            q: Option<Rc<RefCell<TreeNode>>>) 
-            -> Option<Rc<RefCell<TreeNode>>> 
+#[allow(dead_code)]
+pub fn lowest_common_ancestor(
+        root: Option<Rc<RefCell<TreeNode>>>, 
+        p: Option<Rc<RefCell<TreeNode>>>, 
+        q: Option<Rc<RefCell<TreeNode>>>) 
+        -> Option<Rc<RefCell<TreeNode>>> 
+{
+    if q.is_none() { return None }
+    if p.is_none() { return None }
+    if root.is_none() { return None }
+    
+    let q = q.unwrap();
+    let p = p.unwrap();
+    let root = root.unwrap();
+
+    // Handle case where the current root between both leafs
+    // Base case for recursion
+    if (q.borrow().val >= root.borrow().val && 
+        p.borrow().val <= root.borrow().val) || 
+        (p.borrow().val >= root.borrow().val && 
+        q.borrow().val <= root.borrow().val) 
     {
-        if q.is_none() { return None }
-        if p.is_none() { return None }
-        if root.is_none() { return None }
-        
-        let q = q.unwrap();
-        let p = p.unwrap();
-        let root = root.unwrap();
+        return Some(root);
+    } 
 
-        // Handle case where the current root between both leafs
-        // Base case for recursion
-        if (q.borrow().val >= root.borrow().val && 
-            p.borrow().val <= root.borrow().val) || 
-            (p.borrow().val >= root.borrow().val && 
-            q.borrow().val <= root.borrow().val) 
-        {
-            return Some(root);
-        } 
-
-        // Figure out if we should try the left or right leaf next
-        if q.borrow().val > root.borrow().val && p.borrow().val > root.borrow().val
-        {
-            return Self::lowest_common_ancestor(root.borrow().right.clone(), Some(p), Some(q));
-        } else {
-            return Self::lowest_common_ancestor(root.borrow().left.clone(), Some(p), Some(q));
-        }
+    // Figure out if we should try the left or right leaf next
+    if q.borrow().val > root.borrow().val && p.borrow().val > root.borrow().val
+    {
+        return lowest_common_ancestor(root.borrow().right.clone(), Some(p), Some(q));
+    } else {
+        return lowest_common_ancestor(root.borrow().left.clone(), Some(p), Some(q));
     }
 }
 
@@ -102,7 +97,7 @@ mod tests {
         let p = create_node(2);
         let q = create_node(4);
 
-        let ans = super::Solution::lowest_common_ancestor(root, p, q);
+        let ans = lowest_common_ancestor(root, p, q);
         assert_eq!((*ans.unwrap()).borrow().val, 2);
     }
 }

@@ -37,64 +37,61 @@ where T : Clone
     }
 }
 
-struct Solution;
-impl Solution {
-    #[allow(dead_code)]
-    pub fn hamming_distance(lhs: &str, rhs: &str) -> Option<u32> {
-        if lhs.len() != rhs.len() { return None }
+#[allow(dead_code)]
+pub fn hamming_distance(lhs: &str, rhs: &str) -> Option<u32> {
+    if lhs.len() != rhs.len() { return None }
 
-        let mut distance = 0;
-        for (lchar, rchar) in lhs.chars().zip(rhs.chars()) {
-            if lchar != rchar { distance += 1; }
-        }
-
-        Some(distance)
+    let mut distance = 0;
+    for (lchar, rchar) in lhs.chars().zip(rhs.chars()) {
+        if lchar != rchar { distance += 1; }
     }
 
-    #[allow(dead_code)]
-    pub fn get_neighbors(word: &str, word_list: &[String]) -> Vec<String> {
-        let mut neighbors = Vec::new();
-        
-        for el in word_list {
-            if let Some(1) = Self::hamming_distance(word, el) {
-                neighbors.push(el.to_string());
-            }
-        }
+    Some(distance)
+}
 
-        neighbors
+#[allow(dead_code)]
+pub fn get_neighbors(word: &str, word_list: &[String]) -> Vec<String> {
+    let mut neighbors = Vec::new();
+    
+    for el in word_list {
+        if let Some(1) = hamming_distance(word, el) {
+            neighbors.push(el.to_string());
+        }
     }
 
-    #[allow(dead_code)]
-    pub fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
-        let mut touched = HashSet::new();
+    neighbors
+}
 
-        if begin_word.len() != end_word.len() { return 0 }
-        if begin_word == end_word { 
-            return 0;
-        }
+#[allow(dead_code)]
+pub fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
+    let mut touched = HashSet::new();
 
-        touched.insert(begin_word.clone());
-        let mut bfs_queue = VecDeque::new();
-        bfs_queue.push_back(Rc::new(Node::new(begin_word)));
-
-        while !bfs_queue.is_empty() {
-            // unwrap is ok here since we verify Some via loop conditions 
-            let current = bfs_queue.pop_front().unwrap();
-
-            if current.val == end_word {
-                return current.path_to_root().len() as i32;
-            }
-
-            for neighbor in Self::get_neighbors(&current.val, &word_list) {
-                if touched.insert(neighbor.clone()) {
-                    let neighbor = current.add_child(neighbor);
-                    bfs_queue.push_back(neighbor);
-                }
-            }
-        }
-
-        0 as i32
+    if begin_word.len() != end_word.len() { return 0 }
+    if begin_word == end_word { 
+        return 0;
     }
+
+    touched.insert(begin_word.clone());
+    let mut bfs_queue = VecDeque::new();
+    bfs_queue.push_back(Rc::new(Node::new(begin_word)));
+
+    while !bfs_queue.is_empty() {
+        // unwrap is ok here since we verify Some via loop conditions 
+        let current = bfs_queue.pop_front().unwrap();
+
+        if current.val == end_word {
+            return current.path_to_root().len() as i32;
+        }
+
+        for neighbor in get_neighbors(&current.val, &word_list) {
+            if touched.insert(neighbor.clone()) {
+                let neighbor = current.add_child(neighbor);
+                bfs_queue.push_back(neighbor);
+            }
+        }
+    }
+
+    0 as i32
 }
 
 #[cfg(test)]
@@ -107,7 +104,7 @@ mod tests {
         let end_word = "cog".into();
         let word_list = vec!["hot".into(),"dot".into(),"dog".into(),"lot".into(),"log".into(),"cog".into()];
 
-        let ladder_len = Solution::ladder_length(begin_word, end_word, word_list);
+        let ladder_len = ladder_length(begin_word, end_word, word_list);
         assert_eq!(ladder_len, 5);
     }
 }
