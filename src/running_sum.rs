@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 pub fn running_sum(mut nums: Vec<i32>) -> Vec<i32> {
     if nums.is_empty() { return nums }
 

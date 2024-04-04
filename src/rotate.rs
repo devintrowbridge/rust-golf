@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 pub fn rotate(nums: &mut Vec<i32>, k: i32) {
     let k = (k as usize) % nums.len();
     let split_at = nums.len() - k;

@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 pub fn find_smallest(nums: &Vec<i32>, min: i32) -> Option<i32> {
     for num in nums {
         if *num > min {
@@ -9,7 +8,6 @@ pub fn find_smallest(nums: &Vec<i32>, min: i32) -> Option<i32> {
     None
 }
 
-#[allow(dead_code)]
 pub fn remove_duplicates(nums: &mut Vec<i32>) -> usize {
     let mut idx = 1;
     let mut highest = nums[0];

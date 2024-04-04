@@ -8,7 +8,6 @@ pub struct TreeNode {
 
 impl TreeNode {
     #[inline]
-    #[allow(dead_code)]
     pub fn new(val: i32) -> Self {
         TreeNode {
             val,
@@ -17,12 +16,10 @@ impl TreeNode {
         }
     }
 
-    #[allow(dead_code)]
     pub fn set_left(node: Option<Rc<RefCell<TreeNode>>>, left: Option<Rc<RefCell<TreeNode>>>) {
         (*node.unwrap()).borrow_mut().left = left;
     }
 
-    #[allow(dead_code)]
     pub fn set_right(node: Option<Rc<RefCell<TreeNode>>>, right: Option<Rc<RefCell<TreeNode>>>) {
         (*node.unwrap()).borrow_mut().right = right;
     }
@@ -30,7 +27,6 @@ impl TreeNode {
 
 use std::rc::Rc;
 use std::cell::RefCell;
-#[allow(dead_code)]
 pub fn lowest_common_ancestor(
         root: Option<Rc<RefCell<TreeNode>>>, 
         p: Option<Rc<RefCell<TreeNode>>>, 

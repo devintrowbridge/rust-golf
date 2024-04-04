@@ -37,7 +37,6 @@ where T : Clone
     }
 }
 
-#[allow(dead_code)]
 pub fn hamming_distance(lhs: &str, rhs: &str) -> Option<u32> {
     if lhs.len() != rhs.len() { return None }
 
@@ -49,7 +48,6 @@ pub fn hamming_distance(lhs: &str, rhs: &str) -> Option<u32> {
     Some(distance)
 }
 
-#[allow(dead_code)]
 pub fn get_neighbors(word: &str, word_list: &[String]) -> Vec<String> {
     let mut neighbors = Vec::new();
     
@@ -62,7 +60,6 @@ pub fn get_neighbors(word: &str, word_list: &[String]) -> Vec<String> {
     neighbors
 }
 
-#[allow(dead_code)]
 pub fn ladder_length(begin_word: String, end_word: String, word_list: Vec<String>) -> i32 {
     let mut touched = HashSet::new();
 

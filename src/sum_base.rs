@@ -1,4 +1,3 @@
-#[allow(dead_code)]
 pub fn sum_base(n: i32, k: i32) -> i32 {
     let mut result = n;
     let mut ans = 0;

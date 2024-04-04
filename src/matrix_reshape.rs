@@ -1,6 +1,5 @@
 use std::collections::VecDeque;
 
-#[allow(dead_code)]
 pub fn matrix_reshape(mat: Vec<Vec<i32>>, r: i32, c: i32) -> Vec<Vec<i32>> {
     let mut ans = Vec::new();
     

@@ -1,3 +1,5 @@
+#![allow(dead_code)]
+
 mod lowest_common_ancestor;
 mod word_ladder;
 mod two_sum;
@@ -8,3 +10,4 @@ mod largest_int;
 mod remove_dupes;
 mod best_time_to_buy;
 mod rotate;
+mod contains_dupe;
