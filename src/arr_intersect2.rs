@@ -1,5 +1,7 @@
 use std::collections::HashMap;
 
+// O(nums1 + nums2) time complexity
+// Space complexity is O(nums1) in the worst case where every element in nums1 is unique
 pub fn intersect(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
     let mut nums1_cnt: HashMap<i32, i32> = HashMap::new();
     let mut ans = Vec::new();
