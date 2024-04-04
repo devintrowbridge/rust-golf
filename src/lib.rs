@@ -7,3 +7,4 @@ mod sum_base;
 mod largest_int;
 mod remove_dupes;
 mod best_time_to_buy;
+mod rotate;
